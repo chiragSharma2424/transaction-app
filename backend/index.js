@@ -3,6 +3,7 @@ import cors from 'cors';
 import connectsDB from './database/db.js';
 import router from './routes/user-routes.js';
 import dotenv from 'dotenv';
+import accountRouter from './routes/account-routes.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/user', router);
+app.use('/api/v1/account', accountRouter);
 
 
 connectsDB();
