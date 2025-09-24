@@ -1,5 +1,4 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import connectsDB from './database/db.js';
 import router from './routes/user-routes.js';
@@ -8,6 +7,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+// global middlewares
 app.use(express.json());
 app.use(cors());
 

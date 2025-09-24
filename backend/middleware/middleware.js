@@ -12,6 +12,20 @@ const authMiddleware = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        
+
+        if(decoded.userId) {
+            req.userId = decoded.userId;
+            next();
+        } else {
+            return res.status(403).json({});
+        }
+
+    } catch(err) {
+        console.log(`error in auth middleware ${err}`);
+        return res.status(500).json({
+            message: "middleware breaks"
+        })
     }
 }
+
+export default authMiddleware;
