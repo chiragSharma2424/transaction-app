@@ -6,6 +6,7 @@ dotenv.config();
 import zod from 'zod'
 import userModel from '../models/user.model.js';
 import accountModel from '../models/account-model.js';
+import authMiddleware from '../middleware/middleware.js';
 
 
 // zod validation check
@@ -24,7 +25,7 @@ router.post('/signup', async (req, res) => {
         })
     }
 
-   const existingUser = userModel.findOne({
+   const existingUser = await userModel.findOne({
       username: req.body.username
    })
 
@@ -105,7 +106,7 @@ router.post('/signin', async (req, res) => {
 })
 
 
-router.get("/bulk", async (req, res) => {
+router.get("/bulk", authMiddleware, async (req, res) => {
     const filter = req.query.filter || "";
 
     const users = await userModel.find({

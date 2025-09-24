@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/user', router);
-app.use('/api/v1/account');
+
 
 connectsDB();
 
