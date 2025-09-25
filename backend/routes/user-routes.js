@@ -20,7 +20,7 @@ const signupSchema = zod.object({
 router.post('/signup', async (req, res) => {
     const {success} = signupSchema.safeParse(req.body);
     if(!success) {
-        return res.status(400).json({
+        res.status(400).json({
             message: "Email already exists"
         })
     }
@@ -30,7 +30,7 @@ router.post('/signup', async (req, res) => {
    })
 
    if(existingUser) {
-    return res.status(400).json({
+     res.status(400).json({
         message: "email already taken"
     })
    }
@@ -45,15 +45,15 @@ router.post('/signup', async (req, res) => {
    const userId = user._id
 
    await accountModel.create({
-    userId: userId,
-    balanec: Math.floor(Math.random() * 10000)
+    userId,
+    balance: 1 + Math.random() * 10000
    })
 
    const token = jwt.sign({
      userId
-   }, process.env.JWT_SECRET, { expiresIn: '1h' });
+   }, process.env.JWT_SECRET);
 
-    return res.status(201).json({
+     res.status(201).json({
         message: "User created successfully || signup completed",
         token: token
     })
@@ -70,7 +70,7 @@ router.post('/signin', async (req, res) => {
     try {
         const { success } = signinBody.safeParse(req.body);
         if(!success) {
-            return res.status(400).json({
+           return res.status(400).json({
                 message: "Incorrect inputs"
             })
         };
@@ -86,16 +86,13 @@ router.post('/signin', async (req, res) => {
             })
         };
 
-        if(user) {
-            const token = jwt.sign({
-                userId: user._id
-            }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        }
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
         return res.status(200).json({
-            message: "User logged in successfully"
-        });
-
+            message: "User logged in successfully",
+            token: token
+        })
+        
 
     } catch(err) {
         console.log(`error in signin route ${err}`);
