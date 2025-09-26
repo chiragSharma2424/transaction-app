@@ -5,6 +5,7 @@ import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import BottomWarning from "../components/BottomWarning";
 
+
 function Signin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +22,18 @@ function Signin() {
                         setPassword(e.target.value);
                     }}/>
                     <div className="pt-4">
-                         <Button label={"Sign in"} />
+                         <Button label={"Sign in"} onClick={() => {
+                            fetch('http://localhost:3000/api/v1/user/signin', {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    username: username,
+                                    password: password
+                                })
+                            })
+                         }}/>
                     </div>
                     <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
                 </div>
