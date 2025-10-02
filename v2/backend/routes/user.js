@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const { User, Account } = require('../models/userModel');
 const router = express.Router();
 
+// this is our user ka api
+// /api/v2/user/signup
 router.post('/signup', async (req, res) => {
     const {name, email, password} = req.body;
 
@@ -110,7 +112,7 @@ router.get('/bulk', async (req, res) => {
                email: user.email,
                name: user.name,
                id: user._id
-            }));
+            }))
 });
     } catch(error) {
         return res.status(500).json({
