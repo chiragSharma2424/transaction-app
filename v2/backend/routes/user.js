@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User, Account } = require('../models/userModel');
+const authMiddleware = require('../middleware/auth-middleware');
 const router = express.Router();
 
 // this is our user ka api
@@ -79,7 +80,7 @@ router.post('/signin', async (req, res) => {
 });
 
 
-router.put('/', async (req, res) => {
+router.put('/', authMiddleware, async (req, res) => {
     try {
         await User.updateOne({
             id: req.userId
