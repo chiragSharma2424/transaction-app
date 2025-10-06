@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-300">
@@ -50,6 +52,14 @@ function Signup() {
           >
             Sign Up
           </button>
+          <p className="text-center text-gray-600 mt-4 text-sm">
+          Already have an account{" "}
+          <a className="text-indigo-600 hover:underline font-medium cursor-pointer" onClick={() => {
+            navigate('/signin')
+          }}>
+            Sign in
+          </a>
+        </p>
         </div>
       </div>
     </div>
