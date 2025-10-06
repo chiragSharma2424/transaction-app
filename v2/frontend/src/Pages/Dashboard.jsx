@@ -19,11 +19,8 @@ function Dashboard() {
 
    
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl mb-6">
-        <input
-          type="text"
-          placeholder="Search user by name or email..."
-          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <input type="text" placeholder="Search user by name or email..."
+          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
       </div>
 
   

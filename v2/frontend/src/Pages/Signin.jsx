@@ -18,14 +18,13 @@ function Signin() {
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
              onChange={(e) => {
                 setEmail(e.target.value);
-             }}
-          />
+             }}/>
+             
           <input type="password" placeholder="Password"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               onChange={(e) => {
                 setPassword(e.target.value);
-              }}
-          />
+              }}/>
 
           <button className="bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-200 font-semibold"
              onClick={() => {
@@ -39,8 +38,7 @@ function Signin() {
                         password: password
                     })
                 })
-             }}
-          >
+             }}>
             Sign In
           </button>
         </div>
