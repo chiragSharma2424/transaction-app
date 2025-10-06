@@ -37,7 +37,7 @@ function Signup() {
 
           <button className="bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold"
               onClick={() => {
-                fetch('http://localhost:3000/api/v2/signup', {
+                fetch('http://localhost:3000/api/v2/user/signup', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

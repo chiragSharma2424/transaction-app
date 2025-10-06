@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mainRouter = require('./routes/index');
+const { connectsDB } = require('./db/db');
 const port = 3000;
 
 app.use(cors());
@@ -10,6 +11,9 @@ app.use(bodyParser.json());
 
 // routes
 app.use('api/v2', mainRouter);
+
+// connection of database
+connectsDB()
 
 app.listen(port, () => {
     console.log(`app is listening on http://localhost:${port}`);
