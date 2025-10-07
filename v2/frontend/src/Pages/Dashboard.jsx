@@ -1,52 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Dashboard() {
-  const users = [
-    { id: 1, name: "Amit Sharma", email: "amit@gmail.com" },
-    { id: 2, name: "Riya Mehta", email: "riya@gmail.com" },
-    { id: 3, name: "Karan Singh", email: "karan@gmail.com" },
-  ];
+  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
+
+  fetch(`http:/localhost:3000/api/v2/user/bulk?filter=${filter}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((resp) => {
+    return resp.json();
+  }).then((data) => {
+    console.log(data);
+  }).catch((err) => {
+    console.log(`something went wrong: ${err}`);
+  })
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
-      
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-          Your Balance
-        </h2>
-        <p className="text-4xl font-bold text-green-600">₹12,450.00</p>
+    <div className="min-h-screen bg-gray-50">
+    
+      <div className="bg-white px-6 py-4 shadow-sm border-b">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-gray-800">PayTM App</h1>
+          <div className="text-gray-600">
+            Your balance:{" "}
+            <span className="font-medium text-green-600">₹10,000</span>
+          </div>
+        </div>
       </div>
 
-   
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl mb-6">
-        <input type="text" placeholder="Search user by name or email..."
-          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-      </div>
+     
+      <div className="max-w-7xl mx-auto px-8 py-8">
+        
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">Users</h2>
+          <input
+            type="text"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Search users..."
+            className="w-full border rounded-md px-4 py-2 mb-6 outline-none focus:ring focus:ring-blue-200"
+          />
 
-  
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">
-          Send Money To
-        </h3>
-
-        <div className="space-y-4">
-          {users.map((user) => (
-            <div
-              key={user.id}
-              className="flex items-center justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
-              <div>
-                <h4 className="text-lg font-medium text-gray-800">{user.name}</h4>
-                <p className="text-sm text-gray-500">{user.email}</p>
+         
+          <div className="space-y-3">
+            {[1].map((id) => (
+              <div
+                key={id}
+                className="flex items-center justify-between border-b py-3"
+              >
+                <div>
+                  <p className="font-medium text-gray-800">User {id}</p>
+                  <p className="text-sm text-gray-500">user{id}@gmail.com</p>
+                </div>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                  Send Money
+                </button>
               </div>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                Send Money
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
 export default Dashboard;
