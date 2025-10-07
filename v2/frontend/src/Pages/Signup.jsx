@@ -51,11 +51,12 @@ function Signup() {
                     return resp.json();
                  }).then((data) => {
                     console.log(data);
+                    localStorage.setItem("token", data.token);
+                    navigate('/dashboard')
                  }).catch((err) => {
                     console.log(`error while sending fetch ${err}`);
                  })
-              }}
-          >
+              }} >
             Sign Up
           </button>
           <p className="text-center text-gray-600 mt-4 text-sm">

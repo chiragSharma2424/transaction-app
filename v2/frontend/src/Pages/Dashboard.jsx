@@ -1,21 +1,21 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import { use } from "react";
+import { useEffect } from "react";
 
 function Dashboard() {
-  const [filter, setFilter] = useState("");
+  const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
 
-  fetch(`http:/localhost:3000/api/v2/user/bulk?filter=${filter}`, {
-    method: "POST",
+  useEffect(() => {
+    axios.get(`http://localhost:3000/api/v2/user/bulk?filter=${filter}`, {
     headers: {
-      "Content-Type": "application/json"
-    }
-  }).then((resp) => {
-    return resp.json();
-  }).then((data) => {
-    console.log(data);
-  }).catch((err) => {
-    console.log(`something went wrong: ${err}`);
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  }).then((res) => {
+    setUsers(res.data.users);
   })
+  }, [filter]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,21 +38,21 @@ function Dashboard() {
           <input
             type="text"
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
             placeholder="Search users..."
-            className="w-full border rounded-md px-4 py-2 mb-6 outline-none focus:ring focus:ring-blue-200"
-          />
+            className="w-full border rounded-md px-4 py-2 mb-6 outline-none focus:ring focus:ring-blue-200"/>
 
          
           <div className="space-y-3">
-            {[1].map((id) => (
+            {users.map((user) => (
               <div
-                key={id}
                 className="flex items-center justify-between border-b py-3"
               >
                 <div>
-                  <p className="font-medium text-gray-800">User {id}</p>
-                  <p className="text-sm text-gray-500">user{id}@gmail.com</p>
+                  <p className="font-medium text-gray-800">{user.name}</p>
+                  <p className="text-sm text-gray-500">{user.email}</p>
                 </div>
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                   Send Money
