@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // routes
-app.use('api/v2', mainRouter);
+app.use('/api/v2', mainRouter);
 
 // connection of database
 connectsDB()

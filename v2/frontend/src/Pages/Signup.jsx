@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {
-    const [fullName, setFullName] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -17,9 +17,9 @@ function Signup() {
         </h2>
 
         <div className="flex flex-col space-y-4">
-          <input type="text" placeholder="Full Name"
+          <input type="text" placeholder="Name"
               onChange={(e) => {
-                setFullName(e.target.value);
+                setName(e.target.value);
               }}
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
 
@@ -43,10 +43,16 @@ function Signup() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        fullName: fullName,
+                        name: name,
                         email: email,
                         password: password
                     })
+                 }).then((resp) => {
+                    return resp.json();
+                 }).then((data) => {
+                    console.log(data);
+                 }).catch((err) => {
+                    console.log(`error while sending fetch ${err}`);
                  })
               }}
           >
