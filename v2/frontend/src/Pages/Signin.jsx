@@ -28,7 +28,7 @@ function Signin() {
 
           <button className="bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-200 font-semibold"
              onClick={() => {
-                fetch('http://locahost:3000/api/v2/user', {
+                fetch('http://localhost:3000/api/v2/user/signin', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -37,6 +37,12 @@ function Signin() {
                         email: email,
                         password: password
                     })
+                }).then((resp) => {
+                  return resp.json()
+                }).then((data) => {
+                  console.log(data);
+                }).catch((err) => {
+                  console.log(`error while sending signin request ${err}`);
                 })
              }}>
             Sign In
