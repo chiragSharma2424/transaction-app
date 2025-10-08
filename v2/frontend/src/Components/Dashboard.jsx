@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
+  const [balance, setBalance] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,18 @@ function Dashboard() {
   })
   }, [filter]);
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/v2/account/balance', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then((res) => {
+       setBalance(res.data.balance);
+    }).catch((err) => {
+      console.log(err);
+    })
+  })
+
   return (
     <div className="min-h-screen bg-gray-50">
     
@@ -27,7 +40,7 @@ function Dashboard() {
           <h1 className="text-xl font-semibold text-gray-800">PayTM App</h1>
           <div className="text-gray-600">
             Your balance:{" "}
-            <span className="font-medium text-green-600">₹10,000</span>
+            <span className="font-medium text-green-600">{balance}</span>
           </div>
         </div>
       </div>

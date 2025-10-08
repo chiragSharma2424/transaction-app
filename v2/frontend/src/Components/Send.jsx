@@ -1,4 +1,4 @@
-import React from "react";
+import axios from 'axios';
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -18,9 +18,9 @@ function Send() {
        
         <div className="flex items-center justify-center mb-6 space-x-3">
           <div className="w-12 h-12 bg-green-500 text-white flex items-center justify-center rounded-full text-xl font-bold">
-            H
+             {name[0].toUpperCase()}
           </div>
-          <span className="text-lg font-medium text-gray-800">Friend’s Name</span>
+          <span className="text-lg font-medium text-gray-800">{name}</span>
         </div>
 
        
@@ -33,13 +33,34 @@ function Send() {
             onChange={(e) => {
               setAmount(e.target.value);
             }}
+            id='amount'
             className="mt-1 w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-green-500"/>
         </div>
 
       
-        <button className="w-full bg-green-500 text-white py-2.5 rounded-lg hover:bg-green-600 transition font-semibold">
-          Initiate Transfer
-        </button>
+        <button className="w-full bg-green-500 text-white py-2.5 rounded-lg hover:bg-green-600 transition font-semibold"
+       onClick={async () => {
+      try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v2/account/transfer",
+        {
+          to: id,
+          amount: Number(amount)   
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      );
+      alert(response.data.message || "Transfer Successful!");
+    } catch (err) {
+      alert(err.response?.data?.message || "Transaction Failed!");
+      console.error(err);
+    }
+  }}>
+  Initiate Transfer
+</button>
       </div>
     </div>
   );
