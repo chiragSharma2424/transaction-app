@@ -1,6 +1,13 @@
 import React from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function Send() {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('name');
+  const id = searchParams.get('id');
+
+  const [amount, setAmount] = useState(0);
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm text-center">
@@ -23,6 +30,9 @@ function Send() {
           </label>
           
           <input type="number" placeholder="Enter amount"
+            onChange={(e) => {
+              setAmount(e.target.value);
+            }}
             className="mt-1 w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-green-500"/>
         </div>
 

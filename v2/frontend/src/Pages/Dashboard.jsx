@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { use } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v2/user/bulk?filter=${filter}`, {
@@ -54,7 +56,10 @@ function Dashboard() {
                   <p className="font-medium text-gray-800">{user.name}</p>
                   <p className="text-sm text-gray-500">{user.email}</p>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                   onClick={() => {
+                    navigate(`/send?id=${user.id}&name=${user.name}`);
+                   }}>
                   Send Money
                 </button>
               </div>
