@@ -7,6 +7,7 @@ function Dashboard() {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
   const [balance, setBalance] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,14 +30,29 @@ function Dashboard() {
     }).catch((err) => {
       console.log(err);
     })
-  })
+  });
+
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/v2/user/me", {
+      method: "GET",
+      headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+       },
+    }).then((resp) => {
+      return resp.json();
+    }).then((data) => {
+      console.log(data);
+      setUser(data.user);
+    })
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-50">
     
       <div className="bg-white px-6 py-4 shadow-sm border-b">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-800">{}</h1>
+          <h1 className="text-xl font-semibold text-gray-800">{user?.name}</h1>
           <div className="text-gray-600">
             Your balance:{" "}
             <span className="font-medium text-green-600">{balance}</span>

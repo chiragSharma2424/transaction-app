@@ -21,7 +21,7 @@ function Appbar() {
         </div>
 
        
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 justify-evenly">
           <button
              onClick={() => {
                 navigate('/signup')
