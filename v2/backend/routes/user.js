@@ -24,18 +24,21 @@ router.post('/signup', async (req, res) => {
         })
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({
         name: name,
         email: email,
-        password: password
+        password: hashedPassword
     });
 
     const userId = newUser._id;
 
     // creating an account
     await Account.create({
+        name: name,
         userId: userId,
-        balance: 1 + Math.random() * 10000,
+        balance: Math.floor(1 + Math.random() * 10000)
     });
 
     const token = jwt.sign({userId}, "secret-key");
@@ -68,7 +71,7 @@ router.post('/signin', async (req, res) => {
 
         res.json({
             message: "Logged in successfully",
-            token
+            token: token
         })
 
     } catch(error) {
@@ -80,7 +83,7 @@ router.post('/signin', async (req, res) => {
 });
 
 
-router.put('/', authMiddleware, async (req, res) => {
+router.put('/update', authMiddleware, async (req, res) => {
     try {
         await User.updateOne({
             id: req.userId

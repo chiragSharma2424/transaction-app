@@ -9,6 +9,7 @@ const userschema = new mongoose.Schema({
 });
 
 const accountSchema = new mongoose.Schema({
+    name: {type: String},
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

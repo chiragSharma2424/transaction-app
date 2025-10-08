@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { use } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +36,7 @@ function Dashboard() {
     
       <div className="bg-white px-6 py-4 shadow-sm border-b">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-800">PayTM App</h1>
+          <h1 className="text-xl font-semibold text-gray-800">{}</h1>
           <div className="text-gray-600">
             Your balance:{" "}
             <span className="font-medium text-green-600">{balance}</span>

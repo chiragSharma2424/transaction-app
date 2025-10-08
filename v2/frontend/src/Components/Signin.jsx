@@ -41,6 +41,7 @@ function Signin() {
                   return resp.json()
                 }).then((data) => {
                   console.log(data);
+                  localStorage.setItem('token', data.token);
                   navigate('/dashboard');
                 }).catch((err) => {
                   console.log(`error while sending signin request ${err}`);
