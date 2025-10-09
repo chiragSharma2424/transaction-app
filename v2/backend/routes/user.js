@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+dotenv.config();
 const jwt = require('jsonwebtoken');
 const { User, Account } = require('../models/userModel');
 const authMiddleware = require('../middleware/auth-middleware');
@@ -41,7 +43,7 @@ router.post('/signup', async (req, res) => {
         balance: Math.floor(1 + Math.random() * 10000)
     });
 
-    const token = jwt.sign({userId}, "secret-key");
+    const token = jwt.sign({userId}, process.env.SECRET_KEY);
 
     res.status(201).json({
         message: "user created successfully",
@@ -67,7 +69,7 @@ router.post('/signin', async (req, res) => {
             })
         }
 
-        const token = jwt.sign({userId: existingUser._id}, "secret-key");
+        const token = jwt.sign({userId: existingUser._id}, process.env.SECRET_KEY);
 
         res.json({
             message: "Logged in successfully",
@@ -136,7 +138,7 @@ router.get('/me', authMiddleware, async (req, res) => {
         })
     }
     res.json({
-        name: this.name
+        name: user.name
     })
 })
 

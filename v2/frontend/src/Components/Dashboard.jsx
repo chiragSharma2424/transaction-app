@@ -78,8 +78,8 @@ function Dashboard() {
           <div className="space-y-3">
             {users.map((user) => (
               <div
-                className="flex items-center justify-between border-b py-3"
-              >
+                className="flex items-center justify-between border-b py-3">
+                  
                 <div>
                   <p className="font-medium text-gray-800">{user.name}</p>
                   <p className="text-sm text-gray-500">{user.email}</p>
