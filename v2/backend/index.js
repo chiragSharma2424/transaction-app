@@ -8,7 +8,7 @@ const mainRouter = require('./routes/index');
 const { connectsDB } = require('./db/db');
 const port = process.env.PORT;
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(bodyParser.json());
 
 // routes
